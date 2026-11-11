@@ -1,0 +1,7 @@
+{
+  "appId": "com.catatuang.app",
+  "appName": "CatatUang",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "backgroundColor": "#1d4e5f"
+}
