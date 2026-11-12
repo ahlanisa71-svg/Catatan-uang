@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CatatUang</title>
 <link rel="manifest" href="manifest.json">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://heuaafhuvexgoektoetq.supabase.co; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jbopkfybtwsvvoamtdph.supabase.co; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1d4e5f">
 <link rel="icon" href="icon-192.png">
@@ -881,8 +881,8 @@ function migrateLegacy(k){try{const a=localStorage.getItem('catatuang:v2');if(a)
    Data selalu ditulis dulu ke penyimpanan perangkat. Saat online, perubahan dikirim/ditarik otomatis ke tabel Supabase "catatan_uang".
    Kolom yang dipakai: keterangan (text), jumlah (int8), tipe (text: masuk / keluar / transfer / meta).
    Isi SUPABASE_URL dan SUPABASE_KEY dari Supabase > Project Settings > API. Kosong = sinkron nonaktif, app tetap jalan offline. */
-const SUPABASE_URL='https://heuaafhuvexgoektoetq.supabase.co';   /* contoh: https://abcdxyz.supabase.co */
-const SUPABASE_KEY='sb_publishable_KrJ0K0OPi5QbJPNAElaxTw_emRckBhA';   /* anon / public key */
+const SUPABASE_URL='https://jbopkfybtwsvvoamtdph.supabase.co';   /* contoh: https://abcdxyz.supabase.co */
+const SUPABASE_KEY='sb_publishable_E6klcUa4bP5CrFWIVwVxEQ_T3tMCHTo';   /* anon / public key */
 const SB_TABLE='catatan_uang';
 const META_KEYS=['cats','wallets','settings','budgets','goals','bills','shop'];
 const Sync={
