@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -152,3 +155,12 @@ jobs:
         with:
           name: CatatUang-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          V=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
+          cp android/app/build/outputs/apk/debug/app-debug.apk "CatatUang-$V.apk"
+          gh release create "v$V-$RUN_NUMBER" "CatatUang-$V.apk" --title "CatatUang $V" --notes "Versi $V" --latest
