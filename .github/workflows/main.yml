@@ -1,4 +1,4 @@
-name: Build APK
+Build APK
 
 on:
   push:
@@ -115,8 +115,33 @@ jobs:
           </layer-list>''')
           PY
 
+      - name: Set APK version
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          p = 'android/app/build.gradle'
+          s = open(p, encoding='utf-8').read()
+          v = json.load(open('package.json'))['version']
+          s = re.sub(r'versionCode\s+\d+', 'versionCode ' + os.environ['RUN_NUMBER'], s, count=1)
+          s = re.sub(r'versionName\s+"[^"]*"', 'versionName "' + v + '"', s, count=1)
+          open(p, 'w', encoding='utf-8').write(s)
+          PY
+
       - name: Sync web assets
         run: npx cap sync android
+
+      - name: Use fixed signing key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            mkdir -p ~/.android
+            echo "$KEYSTORE_BASE64" | base64 -d > ~/.android/debug.keystore
+          else
+            echo "::warning::Secret KEYSTORE_BASE64 belum diisi, APK memakai kunci acak dan tidak bisa dipasang di atas versi lama."
+          fi
 
       - name: Build debug APK
         working-directory: android
