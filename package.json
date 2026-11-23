@@ -1,6 +1,6 @@
 {
   "name": "catatuang",
-  "version": "2.4.19",
+  "version": "2.4.20",
   "private": true,
   "dependencies": {
     "@capacitor/android": "^6.1.2",

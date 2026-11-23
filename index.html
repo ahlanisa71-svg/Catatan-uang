@@ -285,6 +285,14 @@ nav button span{transition:color .25s}
   <div id="auth"></div><div id="crop"></div>
 </div>
 <script>
+(function(){var E=[];function add(m){E.push(String(m).slice(0,200))}
+addEventListener('error',function(e){add((e.message||'error')+(e.lineno?' @'+e.lineno+':'+e.colno:''))});
+addEventListener('unhandledrejection',function(e){add('promise: '+((e.reason&&e.reason.message)||e.reason))});
+setTimeout(function(){var v=document.getElementById('view');if(v&&v.children.length)return;
+var d=document.createElement('div');d.style.cssText='position:fixed;left:12px;right:12px;top:90px;z-index:99;background:#fff;color:#b00020;border:1px solid #b00020;border-radius:12px;padding:12px;font:12px/1.5 monospace;word-break:break-all';
+d.textContent='Gagal memuat aplikasi. '+(E.join(' | ')||'Tidak ada pesan error.')+' | '+navigator.userAgent;document.body.appendChild(d)},3000)})();
+</script>
+<script>
 /* ===== Model data & penyimpanan (v2) =====
    items   : transaksi {id,type(in|out|transfer),amount,categoryId,walletId,toWalletId?,date,note,updatedAt,deleted?}
    cats    : kategori {id,name,type(in|out),color}
@@ -510,7 +518,7 @@ function creatorHtml(){
   if(!L.length)return '';
   return `<p class="note cre" style="text-align:center;margin-top:22px;line-height:1.9">${L.join('<br>')}</p>`;
 }
-const APP={name:'CatatUang',version:'2.4.19',build:'2.4.19.26.11.23.1',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
+const APP={name:'CatatUang',version:'2.4.20',build:'2.4.20.26.11.23.2',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
 function viewMore(){
   if(S.sub==='account')return viewAccount();
   if(S.sub==='settings')return viewSettings();
