@@ -510,7 +510,7 @@ function creatorHtml(){
   if(!L.length)return '';
   return `<p class="note cre" style="text-align:center;margin-top:22px;line-height:1.9">${L.join('<br>')}</p>`;
 }
-const APP={name:'CatatUang',version:'2.4.18',build:'2.4.18.26.10.31.7',date:'31 Oktober 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
+const APP={name:'CatatUang',version:'2.4.19',build:'2.4.19.26.11.23.1',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
 function viewMore(){
   if(S.sub==='account')return viewAccount();
   if(S.sub==='settings')return viewSettings();
@@ -648,8 +648,8 @@ function viewApk(){
   return `<button class="back" data-sub="">‹ Lainnya</button><h1>Versi APK</h1>
   <div class="logo">${APP.name}</div><p style="text-align:center"><span class="badge">Versi ${APP.version}</span></p>
   <h2>Informasi</h2><div class="card">${kv('Nama aplikasi',APP.name)}${kv('Versi',APP.version)}${kv('Nomor build',APP.build)}${kv('Tanggal rilis',APP.date)}${kv('Platform',APP.platform)}${kv('Penyimpanan data',APP.store)}</div>
-  <h2>Catatan perubahan</h2><div class="card"><p style="font-size:13px;font-weight:600;margin-bottom:8px">Versi ${APP.version}</p><ul class="cl"><li>Mode tamu: lihat-lihat dulu sebelum daftar</li><li>Kode pemulihan dan fitur Lupa kata sandi</li><li>Data cloud dienkripsi di HP sebelum dikirim</li><li>Hash kata sandi dan PIN lebih kuat, kata sandi minimal 8 karakter</li><li>Koneksi dibatasi hanya ke Supabase</li></ul></div>
-  <p class="note">Pembaruan dilakukan dengan memasang APK versi terbaru. Data tetap aman selama aplikasi tidak dihapus atau datanya dibersihkan, jadi salin cadangan lebih dulu di Pengaturan.</p>`;
+  <h2>Catatan perubahan</h2><div class="card"><p style="font-size:13px;font-weight:600;margin-bottom:8px">Versi ${APP.version}</p><ul class="cl"><li>APK baru bisa dipasang langsung di atas yang lama</li><li>Foto profil dengan crop manual</li><li>Menu Akun lebih simpel</li><li>Tautan Facebook di bagian bawah</li></ul></div>
+  <p class="note">Pasang APK versi terbaru langsung di atas yang lama, tanpa menghapus aplikasi. Data tetap aman. Tetap salin cadangan di Pengaturan sebelum menghapus aplikasi atau membersihkan datanya.</p>`;
 }
 function viewAbout(){
   const f=[['Catat cepat','Pemasukan dan pengeluaran tersimpan dalam beberapa ketukan.'],['Banyak dompet','Tunai, bank, dan e-wallet dengan saldo masing-masing.'],['Laporan jelas','Ringkasan bulanan dan pengeluaran per kategori.'],['Anggaran &amp; tabungan','Batas belanja dan target menabung dengan progres.'],['Tagihan &amp; belanja','Pengingat jatuh tempo dan daftar belanja yang bisa langsung dicatat.']];
