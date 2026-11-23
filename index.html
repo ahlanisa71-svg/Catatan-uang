@@ -339,7 +339,8 @@ const Repo={
 
 /* ===== Util ===== */
 const $=s=>document.querySelector(s);
-const rp=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
+const rp=(()=>{let f=null;try{f=new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0,maximumFractionDigits:0})}catch(e){}
+  return n=>{if(f)try{return f.format(n)}catch(e){}n=Math.round(Number(n)||0);return (n<0?'-':'')+'Rp\u00a0'+String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}})();
 const iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)};
 const parse=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -518,7 +519,7 @@ function creatorHtml(){
   if(!L.length)return '';
   return `<p class="note cre" style="text-align:center;margin-top:22px;line-height:1.9">${L.join('<br>')}</p>`;
 }
-const APP={name:'CatatUang',version:'2.4.20',build:'2.4.20.26.11.23.2',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
+const APP={name:'CatatUang',version:'2.4.21',build:'2.4.21.26.11.23.3',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
 function viewMore(){
   if(S.sub==='account')return viewAccount();
   if(S.sub==='settings')return viewSettings();
