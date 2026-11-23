@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CatatUang</title>
 <link rel="manifest" href="manifest.json">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jbopkfybtwsvvoamtdph.supabase.co; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jbopkfybtwsvvoamtdph.supabase.co https://api.github.com; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#1d4e5f">
 <link rel="icon" href="icon-192.png">
@@ -519,7 +519,7 @@ function creatorHtml(){
   if(!L.length)return '';
   return `<p class="note cre" style="text-align:center;margin-top:22px;line-height:1.9">${L.join('<br>')}</p>`;
 }
-const APP={name:'CatatUang',version:'2.4.21',build:'2.4.21.26.11.23.3',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
+const APP={name:'CatatUang',version:'2.4.22',build:'2.4.22.26.11.23.4',date:'23 November 2026',platform:'Android (APK)',store:'Perangkat + Supabase (otomatis saat online)'};
 function viewMore(){
   if(S.sub==='account')return viewAccount();
   if(S.sub==='settings')return viewSettings();
@@ -652,13 +652,29 @@ function viewSettings(){
   <p class="note">Cadangan manual berupa teks JSON, terpisah dari sinkronisasi otomatis.</p></div>
   <h2>Hapus data</h2><div class="card"><div class="btns" style="margin-top:0"><button class="warn" data-wipe>${S.wipe?'Ketuk lagi untuk menghapus':'Hapus semua transaksi'}</button></div></div>`;
 }
+const Upd={
+  repo:'ahlanisa71-svg/Catatan-uang',url:null,
+  newer(a,b){const x=String(a).split('.').map(Number),y=String(b).split('.').map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d>0}return false},
+  box(h){const b=$('#updbox');if(b)b.innerHTML=h},
+  btn:'<button class="cta" data-chkupd>Periksa pembaruan</button>',
+  say(t,extra){this.box(`<p style="font-size:14px;text-align:center;margin-bottom:10px">${t}</p>${extra||this.btn}`)},
+  async check(){this.box('<p class="note" style="margin:0;text-align:center">Memeriksa…</p>');
+    try{const r=await fetch('https://api.github.com/repos/'+this.repo+'/releases/latest',{headers:{Accept:'application/vnd.github+json'}});
+      if(r.status===404)return this.say('Belum ada versi baru yang dirilis.');if(!r.ok)throw 0;
+      const j=await r.json(),m=String(j.tag_name||'').match(/(\d+(?:\.\d+)+)/),a=(j.assets||[]).find(x=>/\.apk$/i.test(x.name));if(!m)throw 0;
+      if(this.newer(m[1],APP.version)&&a){this.url=a.browser_download_url;this.say(`Versi <b>${esc(m[1])}</b> tersedia.`,'<button class="cta" data-doupd>Unduh dan pasang</button>')}
+      else this.say('Kamu sudah memakai versi terbaru.')}
+    catch(e){this.say('Tidak bisa memeriksa. Pastikan internet aktif.')}},
+  go(){if(this.url)window.open(this.url,'_blank')}
+};
 function viewApk(){
   const kv=(a,b)=>`<div class="kv"><span>${a}</span><b>${b}</b></div>`;
   return `<button class="back" data-sub="">‹ Lainnya</button><h1>Versi APK</h1>
   <div class="logo">${APP.name}</div><p style="text-align:center"><span class="badge">Versi ${APP.version}</span></p>
+  <h2>Pembaruan</h2><div class="card" id="updbox">${Upd.btn}</div>
   <h2>Informasi</h2><div class="card">${kv('Nama aplikasi',APP.name)}${kv('Versi',APP.version)}${kv('Nomor build',APP.build)}${kv('Tanggal rilis',APP.date)}${kv('Platform',APP.platform)}${kv('Penyimpanan data',APP.store)}</div>
-  <h2>Catatan perubahan</h2><div class="card"><p style="font-size:13px;font-weight:600;margin-bottom:8px">Versi ${APP.version}</p><ul class="cl"><li>APK baru bisa dipasang langsung di atas yang lama</li><li>Foto profil dengan crop manual</li><li>Menu Akun lebih simpel</li><li>Tautan Facebook di bagian bawah</li></ul></div>
-  <p class="note">Pasang APK versi terbaru langsung di atas yang lama, tanpa menghapus aplikasi. Data tetap aman. Tetap salin cadangan di Pengaturan sebelum menghapus aplikasi atau membersihkan datanya.</p>`;
+  <h2>Catatan perubahan</h2><div class="card"><p style="font-size:13px;font-weight:600;margin-bottom:8px">Versi ${APP.version}</p><ul class="cl"><li>Menu pembaruan: periksa dan unduh versi baru dari dalam aplikasi</li><li>Layar tidak lagi kosong di HP Android lama</li><li>Foto profil dengan crop manual</li><li>Menu Akun lebih simpel</li><li>Tautan Facebook di bagian bawah</li></ul></div>
+  <p class="note">Setelah mengunduh, ketuk file APK untuk memasangnya di atas aplikasi lama, tanpa menghapus aplikasi. Data tetap aman. Tetap salin cadangan di Pengaturan sebelum menghapus aplikasi atau membersihkan datanya.</p>`;
 }
 function viewAbout(){
   const f=[['Catat cepat','Pemasukan dan pengeluaran tersimpan dalam beberapa ketukan.'],['Banyak dompet','Tunai, bank, dan e-wallet dengan saldo masing-masing.'],['Laporan jelas','Ringkasan bulanan dan pengeluaran per kategori.'],['Anggaran &amp; tabungan','Batas belanja dan target menabung dengan progres.'],['Tagihan &amp; belanja','Pengingat jatuh tempo dan daftar belanja yang bisa langsung dicatat.']];
@@ -740,6 +756,8 @@ document.addEventListener('click',async e=>{
   else if(g('[data-del]')){await Repo.remove(F.id);closeSheet();render();toast('Terhapus')}
   else if(g('[data-syncnow]')){Sync.start()}
   else if(g('[data-saveacc]')){await Auth.edit()}
+  else if(g('[data-chkupd]')){await Upd.check()}
+  else if(g('[data-doupd]')){Upd.go()}
   else if(g('[data-wamsg]')){openWaEditor()}
   else if(g('[data-savewa]')){const v=$('#wt').value.trim();Repo.settings.waTpl=v&&v!==WA_DEF?v:'';await Repo.persist();closeSheet();render();toast('Pesan disimpan')}
   else if(g('[data-resetwa]')){Repo.settings.waTpl='';await Repo.persist();closeSheet();render();toast('Dikembalikan ke pesan standar')}
